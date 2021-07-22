@@ -1,14 +1,13 @@
 import { Component } from "react";
-import Timer from "./Timer"
 
-class App extends Component{
+class Timer extends Component{
   render(){
     return (
       <div>
-        <Timer />
+        <h1>Welcome In Timer Application</h1>
       </div>
     );
   }
 }
 
-export default App;
+export default Timer;
