@@ -1,5 +1,5 @@
 import { Component } from "react";
-
+import "./style.css"
 
 class Timer extends Component{
   constructor(){
@@ -79,7 +79,7 @@ class Timer extends Component{
       })
     }
     
-    if(this.state.hr > 0 && this.state.min === 0){
+    if(this.state.hr > 0 && this.state.min === 0){ //by 1 hour and -- sec -> bug!
       this.setState({
         hr : this.state.hr - 1
       })
@@ -95,7 +95,12 @@ class Timer extends Component{
   clicked(){
     if(document.getElementById("hrBox").value==="" && document.getElementById("secBox").value==="" && document.getElementById("minBox").value===""){
       alert("please enter time")
-    }else{
+    }
+    //not working : need to alert when time is over!
+    if((this.state.hr === 0 || this.state.hr === "00") && (this.state.min === 0 || this.state.min === "00") && (this.state.sec === 0 || this.state.sec === "00")){
+      alert("time stopped!")
+    }
+    else{
       this.setState({disabled : true, inputDisabled : true, stopDisabled : false})
       this.stopSec = setInterval(this.decrementSec,1000)
       this.stopMin = setInterval(this.decrementMin,1000)
@@ -119,49 +124,35 @@ class Timer extends Component{
     document.getElementById("secBox").value = ""
   }
   
-  textStyle = {
-    fontSize : "15px"
-  }
-  inputStyle = {
-  }
+  
 
   render(){
     return (
-      <div  style={{
-        margin : "0 auto",
-        padding:"15px",
-        width:"25rem",
-        height:"30rem",
-        backgroundColor:"grey",
-        color:"white"
-
-      }}>
-        <div className="container" style={{
-          height:"3rem",
-          width:"15rem",
-          backgroundColor:"black"
-        }}>
-          <h1 className="text-center">{this.state.hr + " : " + this.state.min + " : " + this.state.sec}</h1>
+      <div id="main-container">
+        <div id="text-container">
+          <h1 id="text">{this.state.hr + " : " + this.state.min + " : " + this.state.sec}</h1>
         </div>
-        <div className="row" style={{
-          margin:"30px 5px 30px 5px"
-        }}>
 
-          <label className="col-sm" for="hrBox" style={this.textStyle}>Hours</label>
-          <input style={this.inputStyle} disabled={this.state.inputDisabled} className="col-sm" id="hrBox" type="text"  onChange={this.handleHr} ></input>
-          <label className="col-sm" for="minBox" style={this.textStyle}>Minutes</label>
-          <input style={this.inputStyle} disabled={this.state.inputDisabled} className="col-sm" id="minBox" type="text"  onChange={this.handleMin} ></input>
-          <label className="col-sm" for="secBox" style={this.textStyle}>Seconds</label>
-          <input style={this.inputStyle} disabled={this.state.inputDisabled} className="col-sm" id="secBox" type="text"  onChange={this.handleSec} ></input>
+        <div id="input-container">
+          <label className="label" for="hrBox">Hours</label>
+          <input disabled={this.state.inputDisabled} id="hrBox" className="time" type="text" onChange={this.handleHr} ></input>
+          <div id="empty1"></div>
+          <label className="label" for="minBox">Minutes</label>
+          <input disabled={this.state.inputDisabled} id="minBox" className="time" type="text" onChange={this.handleMin}></input>
+          <div id="empty2"></div>
+          <label className="label" for="secBox">Seconds</label>
+          <input disabled={this.state.inputDisabled} id="secBox" className="time" type="text" onChange={this.handleSec}></input>
           
-
         </div>
-        <div className="row">
-            <div className="col-sm"></div>
-            <button className="btn btn-primary col-sm" onClick={this.clicked} disabled={this.state.disabled}>start</button>
-            <div className="col-sm"></div>
-            <button className="btn btn-warning col-sm" onClick={this.stopClicked} disabled={this.state.stopDisabled}>stop</button>
-            <div className="col-sm"></div>
+
+        <div id="btn-container">
+            <div id="start-btn-container">
+              <button id="start-btn" onClick={this.clicked} style={this.state.disabled ? {backgroundColor:"gray"} : undefined} disabled={this.state.disabled}>start</button>
+            </div>
+            <div id="stop-btn-container">
+              <button id="stop-btn" onClick={this.stopClicked} style={this.state.stopDisabled ? {backgroundColor:"gray"} : undefined} disabled={this.state.stopDisabled}>stop</button>
+            </div>
+            
         </div>
       </div>
     );
