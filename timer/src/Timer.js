@@ -78,6 +78,7 @@ class Timer extends Component{
         disabled : false,
       })
     }
+    
     if(this.state.hr > 0 && this.state.min === 0){
       this.setState({
         hr : this.state.hr - 1
@@ -92,10 +93,14 @@ class Timer extends Component{
       
           
   clicked(){
-    this.setState({disabled : true, inputDisabled : true, stopDisabled : false})
-    this.stopSec = setInterval(this.decrementSec,1000)
-    this.stopMin = setInterval(this.decrementMin,1000)
-    this.stopHr = setInterval(this.decrementHr,60000)
+    if(document.getElementById("hrBox").value==="" && document.getElementById("secBox").value==="" && document.getElementById("minBox").value===""){
+      alert("please enter time")
+    }else{
+      this.setState({disabled : true, inputDisabled : true, stopDisabled : false})
+      this.stopSec = setInterval(this.decrementSec,1000)
+      this.stopMin = setInterval(this.decrementMin,1000)
+      this.stopHr = setInterval(this.decrementHr,60000)
+  }
   }
   stopClicked(){
     this.setState({
@@ -122,7 +127,8 @@ class Timer extends Component{
 
   render(){
     return (
-      <div className="container" style={{
+      <div  style={{
+        margin : "0 auto",
         padding:"15px",
         width:"25rem",
         height:"30rem",
